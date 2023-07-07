@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .nav-pills .nav-link {
+            color: black !important; /* Set the desired text color */
+        }
+    
+        .nav-pills .nav-link:hover,
+        .nav-pills .nav-link:focus {
+            background-color:#8e5be5; /* Set the desired background color on hover and focus */
+            color: white !important; /* Set the desired text color on hover and focus */
+        }
+
+        .nav-pills .nav-link.active {
+            background-color:#8e5be5 !important; /* Set the desired background color for the active link */
+            color: white !important; /* Set the desired text color for the active link */
+        }
+        
+    </style>
+    
+    <script>
+        window.addEventListener("DOMContentLoaded", function () {
+            const navLinks = document.querySelectorAll(".nav-pills .nav-link");
+            const currentPath = window.location.pathname;
+
+            navLinks.forEach(function (link) {
+                const linkPath = link.getAttribute("href");
+
+                if (currentPath === linkPath) {
+                    link.classList.add("active");
+                } else {
+                    link.classList.remove("active");
+                }
+
+                link.addEventListener("click", function (event) {
+                    event.preventDefault(); // Prevent default link behavior
+                    const targetPage = link.getAttribute("href");
+                    navigateToPage(targetPage);
+                });
+            });
+
+            function navigateToPage(page) {
+                // Implement your page navigation logic here
+                // For example, you can use AJAX to load content dynamically or perform a full page reload
+                window.location.href = page;
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <div class="container">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+            <!-- <img src="https://i.pinimg.com/originals/31/14/5e/31145e7925e59e8fb344f13422435dba.jpg" alt="todo" style="height:3rem; width:3rem; background:transparent"> -->
+            <img src="images/logo1.png" alt="todo" style="height:3.5rem; width:3rem;" >
+            <span class="fs-4" style="color: #8e5be5; font-weight:bold">To Do List</span>
+        </a>
+
+        <ul class="nav nav-pills">
+            <li class="nav-item"><a href="/" class="nav-link active" aria-current="page">Home</a></li>
+            <li class="nav-item"><a href="/contact" class="nav-link">Contact us</a></li>
+            <li class="nav-item"><a href="/about" class="nav-link">About us</a></li>
+        </ul>
+    </header>
+</div>
+    

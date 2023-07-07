@@ -1,0 +1,108 @@
+<%- include("Header") -%>
+
+
+   <div style="height: 70vh;">
+        <div class="box" id="heading">
+            <h1>
+                <%= listTitle %>
+            </h1>
+        </div>
+
+        <div class="box">
+            <% for( let i=0; i < list.length; i++ ) { %>
+                <div class="item">
+                    <input type="checkbox" />
+                    <p>
+                        <%= list[i] %>
+                    </p>
+
+                    <button class="bt" onclick="editItem(<%= i %>)" id="clickEdit" ><img
+                            src="images/edit.png" alt=""></button>
+
+                    <button class="bt" onclick="submitEdit(<%= i %>)" id="submitEditBtn" 
+                        style="display: none;">
+                        <img src="images/tick-mark-icon.png" alt="" srcset="">
+                    </button>
+
+
+                <form action="/delete" method="post" class="formExt">
+                    <input type="hidden" name="index" value="<%= i %>" />
+                    <button class="bt" type="submit" id="clickDelete" name="list" value="<%= listTitle %>"><img src="images/delete-256 - Copy.png"
+                            alt=""></button>
+                </form>
+            </div>
+        <% } %>
+
+   
+
+            <form action="/" method="post" id="">
+                <input type="text" name="inp" placeholder="New item" autocomplete="off"/>
+                <button type="submit" id="btnn" name="list" value="<%= listTitle %>">+</button>
+            </form>
+        </div>
+    </div>
+
+    <form action="/update" method="post" id="editForm">
+        <input type="hidden" name="list" value="<%= listTitle %>" />
+    </form>
+
+
+    <script>
+        function editItem(index) {
+            const paragraph = document.querySelector(`.item:nth-child(${index + 1}) p`);
+            const editField = document.createElement("input");
+            editField.type = "text";
+            editField.value = paragraph.innerText;
+            editField.style.textAlign = "start";
+            editField.style.width = "100%";
+            editField.style.display = "flex";
+
+            //const submitEditBtn = document.getElementById("submitEditBtn");
+            const submitEditBtn = document.querySelector(`.item:nth-child(${index + 1}) > #submitEditBtn`);
+            submitEditBtn.style.display = "inline"; // Show the submit button
+
+            const editForm = document.getElementById("editForm");
+            editForm.innerHTML = ""; // Clear the form
+
+            // Add the input field and hidden index input to the form
+            editForm.appendChild(editField);
+
+            editForm.appendChild(createHiddenInput("index", index));
+
+            paragraph.replaceWith(editForm);
+            editField.focus();
+
+            const editBtn = document.querySelector(`.item:nth-child(${index + 1}) > #clickEdit`);
+            editBtn.style.display = "none";
+        }
+
+        function submitEdit(index) {
+            const editForm = document.getElementById("editForm");
+            const editField = editForm.querySelector("input[type='text']");
+
+            // Create a hidden input field with the updated value and index
+            const updatedValue = editField.value;
+            const hiddenInput = createHiddenInput("updatedValue", updatedValue);
+            editForm.appendChild(hiddenInput);
+
+            editForm.submit(); // Submit the form to the server
+        }
+
+        function createHiddenInput(name, value) {
+            const hiddenInput = document.createElement("input");
+            hiddenInput.type = "hidden";
+            hiddenInput.name = name;
+            hiddenInput.value = value;
+            return hiddenInput;
+        }
+    </script>
+
+<%- include("footer") -%>
+
+        <!-- <% list.map((item) => { %>
+        <li><%= item %></li>
+        <% }) %> --> -->
+
+
+        
+        
